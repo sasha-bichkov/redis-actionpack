@@ -26,17 +26,13 @@ module ActionDispatch
       private
 
       def set_cookie(env, _session_id, cookie)
-        10.times { p 'SET COOKIE' }
-        p key
-        p "SESSION_ID = #{_session_id}"
-        pp cookie
-        10.times { p '#######################################################' }
+        cookie.expires = 1.day
         request = wrap_in_request(env)
-        pp cookie_jar(request)[key]
-        p 'KEY IS AT THE TOP'
-        pp cookie_jar(request)
 
         cookie_jar(request)[key] = cookie.merge(cookie_options)
+        10.times { p '#######################################################' }
+        pp cookie_jar(request)[key]
+
       end
 
       def get_cookie(request)
@@ -53,8 +49,6 @@ module ActionDispatch
       end
 
       def cookie_jar(request)
-        p @default_options[:signed]
-
         if @default_options[:signed]
           request.cookie_jar.signed_or_encrypted
         else
