@@ -32,7 +32,9 @@ module ActionDispatch
         pp cookie
         10.times { p '#######################################################' }
         request = wrap_in_request(env)
-        pp cookie_jar
+        pp cookie_jar(request)[key]
+        p 'KEY IS AT THE TOP'
+        pp cookie_jar(request)
 
         cookie_jar(request)[key] = cookie.merge(cookie_options)
       end
