@@ -25,6 +25,10 @@ module ActionDispatch
       private
 
       def set_cookie(env, _session_id, cookie)
+        10.times { p 'SET COOCKIE' }
+        p key
+        pp cookie
+
         request = wrap_in_request(env)
         cookie_jar(request)[key] = cookie.merge(cookie_options)
       end
