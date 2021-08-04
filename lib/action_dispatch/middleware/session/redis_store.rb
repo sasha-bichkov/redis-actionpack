@@ -15,6 +15,7 @@ module ActionDispatch
       def initialize(app, options = {})
         options = options.dup
         options[:redis_server] ||= options[:servers]
+
         super
       end
 
@@ -25,11 +26,14 @@ module ActionDispatch
       private
 
       def set_cookie(env, _session_id, cookie)
-        10.times { p 'SET COOCKIE' }
+        10.times { p 'SET COOKIE' }
         p key
+        p "SESSION_ID = #{_session_id}"
         pp cookie
-
+        10.times { p '#######################################################' }
         request = wrap_in_request(env)
+        pp cookie_jar
+
         cookie_jar(request)[key] = cookie.merge(cookie_options)
       end
 
@@ -47,6 +51,8 @@ module ActionDispatch
       end
 
       def cookie_jar(request)
+        p @default_options[:signed]
+
         if @default_options[:signed]
           request.cookie_jar.signed_or_encrypted
         else
