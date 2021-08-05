@@ -26,15 +26,15 @@ module ActionDispatch
       private
 
       def set_cookie(env, _session_id, cookie)
-        pp cookie
-        10.times { p '###################################' }
-        cookie.merge(expires: 1.day)
+        pp cookie.dup
+        10.times { p '################### test ################' }
+
+        cookie = cookie.merge(expires: 1.day)
         request = wrap_in_request(env)
+        pp cookie
 
         cookie_jar(request)[key] = cookie.merge(cookie_options)
-        10.times { p '#######################################################' }
         pp cookie_jar(request)[key]
-
       end
 
       def get_cookie(request)
